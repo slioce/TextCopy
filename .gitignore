@@ -1,0 +1,13 @@
+# Build output
+build/
+DerivedData/
+.build/
+.swiftpm/
+
+# Xcode user state
+xcuserdata/
+
+# Per-developer signing settings
+Config/Local.xcconfig
+
+.DS_Store

@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test the OCR engine
+        run: swift test --package-path TextCopyCore
+      - name: Build the app
+        run: xcodebuild -project TextCopy.xcodeproj -scheme TextCopy -destination generic/platform=macOS -configuration Release -derivedDataPath build build

@@ -1,0 +1,37 @@
+/* Menu */
+"Capture Text" = "Cattura testo";
+"Shortcut in use by another app" = "Scorciatoia usata da un'altra app";
+"Settings…" = "Impostazioni…";
+"Quit TextCopy" = "Esci da TextCopy";
+
+/* Confirmation */
+"Copied" = "Copiato";
+"QR code copied" = "QR copiato";
+"Barcode copied" = "Codice a barre copiato";
+"No text found" = "Nessun testo trovato";
+
+/* Screen Recording permission */
+"Screen Recording permission needed" = "Serve il permesso di Registrazione schermo";
+"TextCopy needs to see the area you select to read its text. Turn on TextCopy in System Settings › Privacy & Security › Screen & System Audio Recording, then reopen the app. If it is already on, turn it off and on again." = "TextCopy deve vedere l'area che selezioni per leggerne il testo. Attiva TextCopy in Impostazioni di Sistema › Privacy e sicurezza › Registrazione schermo e audio, poi riapri l'app. Se è già attivo, disattivalo e riattivalo.";
+"Open System Settings" = "Apri Impostazioni di Sistema";
+"Cancel" = "Annulla";
+
+/* Settings */
+"TextCopy Settings" = "Impostazioni di TextCopy";
+"Capture shortcut" = "Scorciatoia di cattura";
+"Type a shortcut…" = "Premi la combinazione…";
+"This shortcut is already used by another app. Choose a different one." = "Questa scorciatoia è già usata da un'altra app. Scegline un'altra.";
+"Recognition" = "Riconoscimento";
+"Language" = "Lingua";
+"Automatic" = "Automatica";
+"Language correction" = "Correzione linguistica";
+"Turn it off to copy code, links and serial numbers exactly as they appear." = "Disattivala per copiare codice, link e numeri di serie esattamente come appaiono.";
+"QR codes and barcodes" = "QR e codici a barre";
+"Open links automatically" = "Apri automaticamente i link";
+"Only web links (http and https) are opened." = "Si aprono solo i link web (http e https).";
+"General" = "Generali";
+"Confirmation sound" = "Suono di conferma";
+"Launch at login" = "Avvia al login";
+"Permissions" = "Permessi";
+"Screen Recording" = "Registrazione schermo";
+"Granted" = "Concesso";

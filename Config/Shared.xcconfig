@@ -1,0 +1,29 @@
+// Build settings for the TextCopy app target.
+// Per-developer values (signing team) go in Local.xcconfig, which is not committed; see README.
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = com.alessandrolioce.TextCopy
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
+SDKROOT = macosx
+MACOSX_DEPLOYMENT_TARGET = 15.0
+SWIFT_VERSION = 6.0
+
+INFOPLIST_FILE = TextCopy/Resources/Info.plist
+GENERATE_INFOPLIST_FILE = NO
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+COMBINE_HIDPI_IMAGES = YES
+LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks
+DEAD_CODE_STRIPPING = YES
+ENABLE_USER_SCRIPT_SANDBOXING = YES
+ALWAYS_SEARCH_USER_PATHS = NO
+
+// Sandboxed and hardened, as the App Store requires. Signed to run locally unless Local.xcconfig sets a team.
+CODE_SIGN_ENTITLEMENTS = TextCopy/Resources/TextCopy.entitlements
+ENABLE_APP_SANDBOX = YES
+ENABLE_HARDENED_RUNTIME = YES
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = -
+
+#include? "Local.xcconfig"
