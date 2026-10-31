@@ -9,6 +9,7 @@
 "QR code copied" = "QR copiato";
 "Barcode copied" = "Codice a barre copiato";
 "No text found" = "Nessun testo trovato";
+"Reading text…" = "Lettura del testo…";
 
 /* Screen Recording permission */
 "Screen Recording permission needed" = "Serve il permesso di Registrazione schermo";

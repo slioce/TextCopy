@@ -40,6 +40,11 @@ final class Feedback {
         }
     }
 
+    /// Shown only when recognition is taking a while, typically while Vision compiles its models on first use.
+    func showReading() {
+        hud.show(symbol: "text.viewfinder", tint: .secondaryLabelColor, title: String(localized: "Reading text…"), detail: nil, autoHides: false)
+    }
+
     private func confirm(_ title: String, preview: String) {
         hud.show(symbol: "checkmark.circle.fill", tint: .systemGreen, title: title, detail: Self.preview(of: preview))
         play(copiedSound)

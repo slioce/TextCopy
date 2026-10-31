@@ -62,6 +62,14 @@ struct TextRecognizerTests {
         let result = try await TextRecognizer().recognize(image)
         #expect(result == .empty)
     }
+
+    /// The warm-up must go through the same path as a real capture, so its sample has to be readable text.
+    @Test func warmUpSampleReadsLikeACapture() async throws {
+        let image = try #require(TextRecognizer.sampleImage())
+        #expect(image.width >= 1200 && image.height >= 300)
+        let result = try await TextRecognizer().recognize(image)
+        #expect(result.string?.contains("quick brown fox") == true)
+    }
 }
 
 /// White canvas to draw test fixtures on.

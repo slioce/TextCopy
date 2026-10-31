@@ -21,7 +21,14 @@ final class CaptureController {
         Task {
             defer { isCapturing = false }
             guard let image = await ScreenCapture.selectArea() else { return }
+            // Vision compiles its models the first time it runs (up to a minute): say so rather than look stuck.
+            let progress = Task {
+                try? await Task.sleep(for: .milliseconds(400))
+                guard !Task.isCancelled else { return }
+                feedback.showReading()
+            }
             let result = (try? await Preferences.recognizer.recognize(image)) ?? .empty
+            progress.cancel()
             deliver(result)
         }
     }

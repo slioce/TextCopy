@@ -47,7 +47,7 @@ make test      # runs the OCR engine tests
 
 Or open `TextCopy.xcodeproj` in Xcode and press Run. The project is signed to run locally out of the box; no developer account is needed.
 
-On its first launch, TextCopy compiles Vision's models in the background, once (about a minute). Captures then take a fraction of a second.
+Each time it launches, TextCopy prepares Vision's text models in the background. That is instant once macOS has them compiled, and takes about a minute the first time or after some macOS updates; a capture made in the meantime shows "Reading text…" until the text is ready. Captures otherwise take a fraction of a second.
 
 ## Project layout
 

@@ -36,18 +36,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         _ = controller  // preloads the confirmation sounds
         apply(Preferences.shortcut)
-        warmUpRecognizerIfNeeded()
+        warmUpRecognizer()
     }
 
-    /// Once per app and macOS version, so the first capture doesn't wait for Vision to compile its models.
-    private func warmUpRecognizerIfNeeded() {
-        let stamp = "\(Bundle.main.infoDictionary?["CFBundleVersion"] ?? "")/\(ProcessInfo.processInfo.operatingSystemVersionString)"
-        guard UserDefaults.standard.string(forKey: Preferences.Key.warmedUpFor) != stamp else { return }
+    /// Loads Vision's models in the background so the first capture doesn't pay for it. Instant once the system
+    /// has them compiled; about a minute the first time and after some macOS updates. Every launch, on purpose:
+    /// the system can drop the compiled models without the app noticing, and a stale "done" flag would then
+    /// move that minute into the user's next capture.
+    private func warmUpRecognizer() {
         let recognizer = Preferences.recognizer
-        Task.detached(priority: .utility) {
-            await recognizer.warmUp()
-            UserDefaults.standard.set(stamp, forKey: Preferences.Key.warmedUpFor)
-        }
+        Task.detached(priority: .utility) { await recognizer.warmUp() }
     }
 
     @objc private func capture() {

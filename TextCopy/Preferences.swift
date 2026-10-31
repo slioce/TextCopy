@@ -8,7 +8,6 @@ enum Preferences {
         static let languageCorrection = "languageCorrection"
         static let opensLinks = "opensBarcodeLinks"
         static let playsSound = "playsSound"
-        static let warmedUpFor = "warmedUpFor"
     }
 
     static func register() {

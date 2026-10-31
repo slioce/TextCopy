@@ -41,7 +41,8 @@ final class HUD {
         panel.contentView = Self.background(around: row)
     }
 
-    func show(symbol: String, tint: NSColor, title: String, detail: String?) {
+    /// With `autoHides` off the panel stays until the next `show` replaces it.
+    func show(symbol: String, tint: NSColor, title: String, detail: String?, autoHides: Bool = true) {
         icon.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
         icon.contentTintColor = tint
         self.title.stringValue = title
@@ -65,6 +66,7 @@ final class HUD {
         Self.pop(content)
         icon.addSymbolEffect(.bounce)
 
+        guard autoHides else { return }
         hideTask = Task { [panel] in
             try? await Task.sleep(for: .seconds(1.5))
             guard !Task.isCancelled else { return }

@@ -46,19 +46,23 @@ public struct TextRecognizer: Sendable {
         )
     }
 
-    private static func sampleImage() -> CGImage? {
+    /// About a Retina screenshot of two lines of text, so the warm-up runs the same models as a real capture.
+    static func sampleImage() -> CGImage? {
+        let width = 1600, height = 400
         guard let context = CGContext(
-            data: nil, width: 640, height: 120, bitsPerComponent: 8, bytesPerRow: 0,
+            data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
             space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         ) else { return nil }
         context.setFillColor(CGColor(gray: 1, alpha: 1))
-        context.fill(CGRect(x: 0, y: 0, width: 640, height: 120))
-        let text = NSAttributedString(string: "TextCopy warm-up 123", attributes: [
+        context.fill(CGRect(x: 0, y: 0, width: width, height: height))
+        let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key(kCTFontAttributeName as String): CTFontCreateWithName("Helvetica" as CFString, 48, nil),
             NSAttributedString.Key(kCTForegroundColorAttributeName as String): CGColor(gray: 0, alpha: 1),
-        ])
-        context.textPosition = CGPoint(x: 24, y: 40)
-        CTLineDraw(CTLineCreateWithAttributedString(text), context)
+        ]
+        for (index, line) in ["TextCopy warm-up 123", "The quick brown fox jumps over the lazy dog"].enumerated() {
+            context.textPosition = CGPoint(x: 40, y: 260 - index * 120)
+            CTLineDraw(CTLineCreateWithAttributedString(NSAttributedString(string: line, attributes: attributes)), context)
+        }
         return context.makeImage()
     }
 }
