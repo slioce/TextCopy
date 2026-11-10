@@ -29,7 +29,7 @@ Open **Settings…** from the menu bar icon to change the shortcut, the recognit
 
 ## Permissions
 
-On the first capture, macOS asks for **Screen Recording** permission; TextCopy needs it to see the area you select. You can also grant it later in System Settings › Privacy & Security › Screen & System Audio Recording.
+The first time it launches, TextCopy opens a short setup that asks for **Screen Recording** permission, which it needs to see the area you select, and waits for text recognition to be ready. If you skip it, macOS asks for the permission on the first capture; you can also grant it later in System Settings › Privacy & Security › Screen & System Audio Recording.
 
 Builds signed to run locally get a new signature on each build, so macOS may ask again after you rebuild. `make reset-permission` clears the stored decision.
 
@@ -47,7 +47,7 @@ make test      # runs the OCR engine tests
 
 Or open `TextCopy.xcodeproj` in Xcode and press Run. The project is signed to run locally out of the box; no developer account is needed.
 
-Each time it launches, TextCopy prepares Vision's text models in the background. That is instant once macOS has them compiled, and takes about a minute the first time or after some macOS updates; a capture made in the meantime shows "Reading text…" until the text is ready. Captures otherwise take a fraction of a second.
+Each time it launches, TextCopy prepares Vision's text models in the background. That is instant once macOS has them compiled, and takes about a minute the first time or after some macOS updates; the first-launch setup waits for it, and a capture made in the meantime shows "Reading text…" until the text is ready. Captures otherwise take a fraction of a second.
 
 ## Project layout
 

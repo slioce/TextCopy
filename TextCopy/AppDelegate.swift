@@ -20,6 +20,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private lazy var hotKey = HotKey { [weak self] in self?.capture() }
     private var isShortcutAvailable = true
     private var settingsWindow: NSWindow?
+    private var setupWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Preferences.register()
@@ -36,16 +37,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         _ = controller  // preloads the confirmation sounds
         apply(Preferences.shortcut)
-        warmUpRecognizer()
+        let warmUp = warmUpRecognizer()
+        if !Preferences.didCompleteSetup { openSetup(waitingFor: warmUp) }
     }
 
     /// Loads Vision's models in the background so the first capture doesn't pay for it. Instant once the system
     /// has them compiled; about a minute the first time and after some macOS updates. Every launch, on purpose:
     /// the system can drop the compiled models without the app noticing, and a stale "done" flag would then
     /// move that minute into the user's next capture.
-    private func warmUpRecognizer() {
+    @discardableResult
+    private func warmUpRecognizer() -> Task<Void, Never> {
         let recognizer = Preferences.recognizer
-        Task.detached(priority: .utility) { await recognizer.warmUp() }
+        return Task.detached(priority: .utility) { await recognizer.warmUp() }
+    }
+
+    /// First launch only: walks through the Screen Recording permission while the warm-up runs.
+    private func openSetup(waitingFor warmUp: Task<Void, Never>) {
+        let view = SetupWizard(shortcut: Preferences.shortcut, preparation: warmUp) { [weak self] in
+            Preferences.didCompleteSetup = true
+            self?.setupWindow?.close()
+        }
+        let window = NSWindow(contentViewController: NSHostingController(rootView: view))
+        window.title = String(localized: "TextCopy Setup")
+        window.styleMask = [.titled, .closable]
+        window.isReleasedWhenClosed = false
+        window.delegate = self
+        window.center()
+        setupWindow = window
+        present(window)
     }
 
     @objc private func capture() {
@@ -81,15 +100,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             window.center()
             settingsWindow = window
         }
-        NSApp.activate()
-        settingsWindow?.makeKeyAndOrderFront(nil)
-        // macOS may decline the activation request from a menu bar app; this still brings the
-        // window in front of the others once, without keeping it on top.
-        settingsWindow?.orderFrontRegardless()
+        if let settingsWindow { present(settingsWindow) }
     }
 
-    /// Drops the SwiftUI hierarchy so nothing stays in memory while settings are closed.
+    private func present(_ window: NSWindow) {
+        NSApp.activate()
+        window.makeKeyAndOrderFront(nil)
+        // macOS may decline the activation request from a menu bar app; this still brings the
+        // window in front of the others once, without keeping it on top.
+        window.orderFrontRegardless()
+    }
+
+    /// Closing the setup by hand dismisses it for good; the first capture still asks for the permission.
+    /// Not `windowWillClose`: quitting to apply the permission must bring the setup back on relaunch.
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        if sender === setupWindow { Preferences.didCompleteSetup = true }
+        return true
+    }
+
+    /// Drops the SwiftUI hierarchy so nothing stays in memory while the window is closed.
     func windowWillClose(_ notification: Notification) {
-        settingsWindow = nil
+        guard let window = notification.object as? NSWindow else { return }
+        if window === settingsWindow { settingsWindow = nil }
+        if window === setupWindow { setupWindow = nil }
     }
 }

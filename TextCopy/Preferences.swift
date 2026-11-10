@@ -8,6 +8,7 @@ enum Preferences {
         static let languageCorrection = "languageCorrection"
         static let opensLinks = "opensBarcodeLinks"
         static let playsSound = "playsSound"
+        static let didCompleteSetup = "didCompleteSetup"
     }
 
     static func register() {
@@ -34,6 +35,12 @@ enum Preferences {
             languages: language.isEmpty ? [] : [Locale.Language(identifier: language)],
             usesLanguageCorrection: UserDefaults.standard.bool(forKey: Key.languageCorrection)
         )
+    }
+
+    /// Whether the first-launch setup was finished or dismissed.
+    static var didCompleteSetup: Bool {
+        get { UserDefaults.standard.bool(forKey: Key.didCompleteSetup) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.didCompleteSetup) }
     }
 
     static var opensLinks: Bool { UserDefaults.standard.bool(forKey: Key.opensLinks) }

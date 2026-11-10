@@ -17,6 +17,20 @@
 "Open System Settings" = "Apri Impostazioni di Sistema";
 "Cancel" = "Annulla";
 
+/* First-launch setup */
+"TextCopy Setup" = "Configurazione di TextCopy";
+"Welcome to TextCopy" = "Benvenuto in TextCopy";
+"TextCopy copies text from anywhere on your screen. To read it, it needs your permission to see the screen. Everything stays on your Mac." = "TextCopy copia il testo da qualsiasi punto dello schermo. Per leggerlo ha bisogno del tuo permesso per vedere lo schermo. Tutto resta sul tuo Mac.";
+"Turn on TextCopy in System Settings › Privacy & Security › Screen & System Audio Recording. If macOS asks to quit and reopen TextCopy, accept: setup continues from there." = "Attiva TextCopy in Impostazioni di Sistema › Privacy e sicurezza › Registrazione schermo e audio. Se macOS chiede di chiudere e riaprire TextCopy, accetta: la configurazione riprende da lì.";
+"Allow Screen Recording" = "Consenti Registrazione schermo";
+"Not Now" = "Non ora";
+"Getting ready to read text" = "Preparazione alla lettura del testo";
+"TextCopy is setting up text recognition on your Mac. It can take about a minute the first time, and you can keep using your Mac in the meantime." = "TextCopy sta preparando il riconoscimento del testo sul tuo Mac. La prima volta può volerci circa un minuto: nel frattempo puoi continuare a usare il Mac.";
+"You're all set" = "Tutto pronto";
+"Press %@ and drag over the text you want to copy. You'll find TextCopy in the menu bar." = "Premi %@ e trascina sul testo che vuoi copiare. Trovi TextCopy nella barra dei menu.";
+"Screen Recording is still off: TextCopy will ask for it again on your first capture." = "La Registrazione schermo è ancora disattivata: TextCopy la chiederà di nuovo alla prima cattura.";
+"Done" = "Fine";
+
 /* Settings */
 "TextCopy Settings" = "Impostazioni di TextCopy";
 "Capture shortcut" = "Scorciatoia di cattura";

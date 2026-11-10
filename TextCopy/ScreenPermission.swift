@@ -5,18 +5,24 @@ enum ScreenPermission {
 
     /// Per launch, not persisted: the system decides whether to prompt again (for example after the app's
     /// signature changed), and a stale "already asked" flag would hide that prompt behind our own alert.
-    @MainActor private static var didRequest = false
+    @MainActor private(set) static var didRequest = false
 
     static func openSystemSettings() {
         NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
+    }
+
+    /// Shows the system prompt, which macOS presents only once per signature.
+    @MainActor
+    static func request() {
+        didRequest = true
+        CGRequestScreenCaptureAccess()
     }
 
     /// Lets the system prompt first; after that, explain where to turn it on.
     @MainActor
     static func requestOrExplain() {
         guard didRequest else {
-            didRequest = true
-            CGRequestScreenCaptureAccess()
+            request()
             return
         }
         let alert = NSAlert()
